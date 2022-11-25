@@ -1,5 +1,5 @@
 
-import { changeTodo, removeAllTodos } from "../ts/functions";
+import { addTodo, changeTodo, removeAllTodos } from "../ts/functions";
 import { Todo } from "../ts/models/Todo";
 
 //Testar removeAllTodos funktionen
@@ -14,12 +14,6 @@ test("should remove all in list", () => {
     expect(myList.length).toBe(0);
 });
 
-
-/**export function changeTodo(todo: Todo) {
-  todo.done = !todo.done;
-}
- */
-
 test("should toggle between boolean", () => {
     //Arrange
     let todo :Todo = new Todo("Äta mat", true)
@@ -30,4 +24,27 @@ test("should toggle between boolean", () => {
     //Assert
     expect(todo.done).toBe(false);
 
+});
+
+test("should push string into list if the lenght is bigger than 2", () => {
+    //Arrange
+    let todo :string = "Gymma";
+    let myList :Todo[] = [];
+
+    //Act
+    addTodo(todo, myList);
+
+    //Arrange
+    expect(todo.length).toBeGreaterThan(2);
+    expect(myList.length).toBe(1);
+
+});
+
+test("should show error message if its less than 2", () => {
+    let todo :string = "A";
+    let myList :Todo[] = [];
+
+    addTodo(todo, myList);
+
+    expect(todo.length).toBeLessThan(2);
 });
