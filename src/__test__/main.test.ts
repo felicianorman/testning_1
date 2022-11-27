@@ -8,8 +8,14 @@ import { Todo } from "../ts/models/Todo";
 
 //Testar clearTodos() som anropar removeAllTodos och createHTML
 describe("clearTodos function", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
+
   test("should call removeAllTodos", () => {
     //Arrange
+    document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
     let spy = jest.spyOn(fn, "removeAllTodos").mockReturnValue();
     let todo: Todo[] = [new Todo("Simma", true)];
 
@@ -22,6 +28,7 @@ describe("clearTodos function", () => {
 
   test("should call createHTML", () => {
     //Arrange
+    document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
     let spy = jest.spyOn(functions, "createHtml").mockReturnValue();
     let todo: Todo[] = [new Todo("Ät mat", true)];
 
@@ -31,6 +38,17 @@ describe("clearTodos function", () => {
     //Assert
     expect(spy).toHaveBeenCalled();
   });
+});
+
+//Testar createHTML inuti toggleTodo, det gick inte att anropa funktionen inuti describe toggleTodo så fick lägga den utanför
+test("should call createHtml", () => {
+  document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
+  let spy = jest.spyOn(functions, "createHtml").mockReturnValue();
+  let todo: Todo = new Todo("Gå ut med hunden", true);
+
+  functions.toggleTodo(todo);
+
+  expect(spy).toHaveBeenCalled();
 });
 
 //Testar addeventListener som anropar funktionen clearTodos()
@@ -47,30 +65,59 @@ test("should be able to click", () => {
   expect(spy).toHaveBeenCalled();
 });
 
-//Testar toggleTodos som anropar changeTodo och createHTML
-describe("toggleTodo function", () => {
-  test("shold call changeTodo", () => {
+describe("submitform", () => {
+  test("should add eventListener", () => {
     //Arrange
-    let spy = jest.spyOn(fn, "changeTodo").mockReturnValue();
-    let todo: Todo = new Todo("simma", true);
+    let spy = jest.spyOn(functions, "submitform").mockReturnValue();
+    document.body.innerHTML = `<form id="newTodoForm"></form>`;
+    functions.submitform();
 
     //Act
-    functions.toggleTodo(todo);
+    document.getElementById("newTodoText")?.click();
 
     //Assert
     expect(spy).toHaveBeenCalled();
   });
 
-  test("should call createHtml", () => {
-    let spy = jest.spyOn(functions, "createHtml").mockReturnValue();
-    let todo: Todo = new Todo("Ät mat", true);
+  test("should create toDoText", () => {
+    //Arrange
+    let toDoText = document.getElementById("newTodoText") as HTMLInputElement;
+    let toDo = toDoText;
+
+    // document.getElementById("newTodoText") as HTMLInputElement;
 
     //Act
-    functions.toggleTodo(todo);
+    functions.submitform();
 
     //Assert
-    expect(spy).toHaveBeenCalled();
+    expect(toDo).toBe(toDoText);
   });
 });
 
+describe("createhtml", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
 
+test("createhtml", () => {
+  //Arrange
+  document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
+  let todosContainer = document.getElementById("todos") as HTMLUListElement;
+  let todos :Todo[] = [new Todo("Ät mat", true)];
+
+  //Act
+  functions.createHtml(todos);
+
+  //Assert
+  expect(todosContainer.innerHTML).toBe(`<li class=\"todo__text--done todo__text"\>Ät mat</li>`)
+});
+
+test("eventlistener li", () => {
+
+})
+});
+
+/**   li.addEventListener("click", () => {
+      toggleTodo(todos[i]);
+    }); */
