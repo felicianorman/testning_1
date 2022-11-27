@@ -113,11 +113,34 @@ test("createhtml", () => {
   expect(todosContainer.innerHTML).toBe(`<li class=\"todo__text--done todo__text"\>Ät mat</li>`)
 });
 
-test("eventlistener li", () => {
+// test("eventlistener li", () => {
+//   let spy = jest.spyOn(functions, "toggleTodo").mockReturnValue();
+//   let todos :Todo[] = [new Todo("Simma", true)];
 
-})
+//   functions.createHtml(todos);
+//   document.getElementsByClassName("todo__text")
+// })
 });
 
-/**   li.addEventListener("click", () => {
-      toggleTodo(todos[i]);
-    }); */
+//Försökte men den klagar på errorContainer.innerHTML = error
+
+// describe("displayError", () => {
+//   beforeEach(() => {
+//     jest.resetModules();
+//     jest.restoreAllMocks();
+//   });
+
+//   //Arrange
+//   document.body.innerHTML = `errorContainer.innerHTML = error;`
+//   let show :boolean = true;
+//   let error :string= "Du måste ange minst två bokstäver";
+//   document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
+
+
+//   //Act
+//   document.getElementById("error")?.classList.add("show");
+//   functions.displayError(error, show);
+
+//   //Asset
+//   expect(document.getElementById("error")).toBe("show");
+// });
