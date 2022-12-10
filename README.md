@@ -1,4 +1,4 @@
-# Testning - Jest
+# Testning - Uppgift 1 - Medieinstitutet
 ## Beskrivning
 Det här var vår första inlämningsuppgift i kursen Testning. Vi fick en kod av vår lärare, där vi skulle testa funktionerna i main.ts med hjälp av Jest. Vi behövde ha minst 50% code coverage för att få godkänt. 
 <br><br>
